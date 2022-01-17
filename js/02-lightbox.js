@@ -1,9 +1,5 @@
 import { galleryItems } from './gallery-items.js';
 
-/** 
-1. Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи. Используй готовый код из первого задания. 
-*/
-
 const galleryEl = document.querySelector('.gallery');
 
 createGalleryItemsMarkup();
