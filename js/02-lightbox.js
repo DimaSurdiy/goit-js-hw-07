@@ -1,27 +1,32 @@
 import { galleryItems } from './gallery-items.js';
 
 const galleryEl = document.querySelector('.gallery');
+const galleryItemsMarkup = createGalleryItemsMarkup(galleryItems);
 
-createGalleryItemsMarkup();
+galleryEl.insertAdjacentHTML('beforeend', galleryItemsMarkup);
+galleryEl.addEventListener('click', onGalleryItemClick);
 
-galleryEl.addEventListener('click', onGalleryItemsClick);
-
-function createGalleryItemsMarkup() {
-  const galleryItemsMarkup = galleryItems
-    .map(({ original, preview, description }) => {
+function createGalleryItemsMarkup(items) {
+  return items
+    .map(({ preview, original, description }) => {
       return `
-    <a class="gallery__item" href="${original}">
-      <img class="gallery__image" src="${preview}" alt="${description}" title="${description}" />
-    </a>
-    `;
+            <a class="gallery__item" href="${original}">
+                <img class="gallery__image" src="${preview}" alt="${description}" />
+            </a>
+        `;
     })
     .join('');
-
-  galleryEl.innerHTML = galleryItemsMarkup;
 }
 
-function onGalleryItemsClick(evt) {
-  evt.preventDefault();
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+});
 
-  var lightbox = new SimpleLightbox('.gallery a');
+function onGalleryItemClick(e) {
+  e.preventDefault();
+
+  if (!e.target.classList.contains('gallery__image')) {
+    return;
+  }
 }
